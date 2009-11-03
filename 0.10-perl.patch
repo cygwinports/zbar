@@ -1,0 +1,21 @@
+Need to hack around this to build from an uninstalled library...
+
+--- origsrc/zbar-0.10/perl/Makefile.PL	2009-10-23 13:16:44.000000000 -0500
++++ src/zbar-0.10/perl/Makefile.PL	2009-11-03 01:46:45.921313600 -0600
+@@ -1,16 +1,6 @@
+ use 5.006;
+ use ExtUtils::MakeMaker;
+ 
+-use lib qw(inc);
+-use Devel::CheckLib;
+-
+-check_lib_or_exit(
+-    lib    => 'zbar',
+-    header => 'zbar.h',
+-    LIBS   => join(' ', map({ /^LIBS=(.*)/; $1 } grep(/^LIBS=/, @ARGV))),
+-    INC    => join(' ', map({ /^INC=(.*)/; $1 }  grep(/^INC=/, @ARGV))),
+-);
+-
+ WriteMakefile(
+     NAME              => 'Barcode::ZBar',
+     VERSION_FROM      => "ZBar.pm",

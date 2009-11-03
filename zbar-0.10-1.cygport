@@ -1,0 +1,49 @@
+inherit perl python qt4
+
+DESCRIPTION="Bar code reader libraries"
+HOMEPAGE="http://zbar.sourceforge.net/"
+SRC_URI="mirror://sourceforge/zbar/${P}.tar.bz2"
+
+PATCH_URI="
+	0.10-cygwin-no-win32.patch
+	0.10-no-undefined.patch
+	0.10-perl.patch
+"
+
+PKG_NAMES="zbar libzbar0 libzbar-devel libzbargtk0 libzbargtk-devel libzbarqt0
+           libzbarqt-devel perl-Barcode-ZBar python-zbar python-zbarpygtk"
+zbar_CONTENTS="usr/bin/*.exe usr/share/doc/ usr/share/man/man1/"
+libzbar0_CONTENTS="usr/bin/cygzbar-0.dll"
+libzbar_devel_CONTENTS="--exclude=Q* --exclude=zbargtk.h usr/include/
+                        usr/lib/libzbar.* usr/lib/pkgconfig/zbar.pc"
+libzbargtk0_CONTENTS="usr/bin/cygzbargtk-0.dll"
+libzbargtk_devel_CONTENTS="usr/include/zbar/zbargtk.h usr/lib/libzbargtk.*
+                           usr/lib/pkgconfig/zbar-gtk.pc"
+libzbarqt0_CONTENTS="usr/bin/cygzbarqt-0.dll"
+libzbarqt_devel_CONTENTS="usr/include/zbar/Q* usr/lib/libzbarqt.*
+                          usr/lib/pkgconfig/zbar-qt.pc"
+perl_Barcode_ZBar_CONTENTS="${PERL_VENDORARCH#/} usr/share/man/man3/"
+python_zbar_CONTENTS="${PYTHON_SITELIB#/}/zbar.*"
+python_zbarpygtk_CONTENTS="${PYTHON_SITELIB#/}/zbarpygtk.*"
+
+src_compile() {
+	cd ${S}
+	cygautoreconf
+	cd ${B}
+	cygconf --disable-video --without-xv
+	cygmake
+
+	mkdir -p perl
+	cd perl
+	lndirs ${S}/perl ${B}/perl
+	MAKEOPTS+=" INC=-I${S}/include OTHERLDFLAGS=${B}/zbar/.libs/libzbar.dll.a"
+	perl_compile
+}
+
+src_install() {
+	cd ${B}
+	cyginstall
+	cd ${B}/perl
+	perl_install
+	perl_postinst
+}

@@ -1,0 +1,13 @@
+WIN32 gives us VfW support but won't work with X
+
+--- origsrc/zbar-0.10/configure.ac	2009-10-23 13:16:44.000000000 -0500
++++ src/zbar-0.10/configure.ac	2009-11-03 00:29:17.745571300 -0600
+@@ -50,7 +50,7 @@ dnl windows build
+ 
+ AC_CANONICAL_HOST
+ case $host_os in
+-  *cygwin* | *mingw* | *uwin* | *djgpp* | *ems* )
++  *mingw* | *uwin* | *djgpp* | *ems* )
+     win32="yes"
+     AC_DEFINE([_WIN32_WINNT], [0x0500], [Minimum Windows API version])
+   ;;

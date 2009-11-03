@@ -1,0 +1,57 @@
+--- origsrc/zbar-0.10/configure.ac	2009-10-23 13:16:44.000000000 -0500
++++ src/zbar-0.10/configure.ac	2009-11-03 00:29:17.745571300 -0600
+@@ -346,9 +346,11 @@ AS_IF([test "x$with_python" != "xno"],
+    AS_IF([test "x$PYTHON_CFLAGS" != "x"],
+      [],
+      [test "x$PYTHON_CONFIG" != "x" && test -x "$PYTHON_CONFIG"],
+-     [PYTHON_CFLAGS=`$PYTHON_CONFIG --cflags`],
++     [PYTHON_CFLAGS=`$PYTHON_CONFIG --cflags`
++      PYTHON_LIBS=`$PYTHON_CONFIG --libs`],
+      [test -x "$PYTHON-config"],
+-     [PYTHON_CFLAGS=`$PYTHON-config --cflags`],
++     [PYTHON_CFLAGS=`$PYTHON-config --cflags`
++      PYTHON_LIBS=`$PYTHON-config --libs`],
+      [PYTHON_CFLAGS=`$PYTHON -c 'import distutils.sysconfig as s; print " ".join(s.get_config_vars("CFLAGS")) + " -I"+s.get_python_inc() + " -I"+s.get_python_inc(plat_specific=True)'`])
+ dnl FIXME now should check that #include <Python.h> compiles
+ 
+--- origsrc/zbar-0.10/gtk/Makefile.am.inc	2009-10-23 13:16:44.000000000 -0500
++++ src/zbar-0.10/gtk/Makefile.am.inc	2009-11-02 23:45:34.986844600 -0600
+@@ -1,6 +1,6 @@
+ lib_LTLIBRARIES += gtk/libzbargtk.la
+ gtk_libzbargtk_la_CPPFLAGS = -Igtk $(GTK_CFLAGS) $(AM_CPPFLAGS)
+-gtk_libzbargtk_la_LDFLAGS = -version-info $(ZGTK_LIB_VERSION) \
++gtk_libzbargtk_la_LDFLAGS = -no-undefined -version-info $(ZGTK_LIB_VERSION) \
+     -export-symbols-regex "^zbar_gtk_.*" $(AM_LDFLAGS)
+ gtk_libzbargtk_la_LIBADD = $(GTK_LIBS) zbar/libzbar.la $(AM_LIBADD)
+ 
+--- origsrc/zbar-0.10/pygtk/Makefile.am.inc	2009-10-23 13:16:44.000000000 -0500
++++ src/zbar-0.10/pygtk/Makefile.am.inc	2009-11-02 23:46:35.936150900 -0600
+@@ -1,7 +1,7 @@
+ pyexec_LTLIBRARIES += pygtk/zbarpygtk.la
+ pygtk_zbarpygtk_la_CPPFLAGS = \
+     $(GTK_CFLAGS) $(PYTHON_CFLAGS) $(PYGTK_CFLAGS) $(AM_CPPFLAGS)
+-pygtk_zbarpygtk_la_LDFLAGS = -shared -module -avoid-version -export-dynamic \
++pygtk_zbarpygtk_la_LDFLAGS = -shared -module -avoid-version -no-undefined \
+     -export-symbols-regex initzbarpygtk
+ pygtk_zbarpygtk_la_LIBADD = \
+     $(PYTHON_LIBS) $(PYGTK_LIBS) gtk/libzbargtk.la $(AM_LIBADD)
+--- origsrc/zbar-0.10/python/Makefile.am.inc	2009-10-23 13:16:44.000000000 -0500
++++ src/zbar-0.10/python/Makefile.am.inc	2009-11-02 23:46:43.268163700 -0600
+@@ -1,6 +1,6 @@
+ pyexec_LTLIBRARIES += python/zbar.la
+ python_zbar_la_CPPFLAGS = $(PYTHON_CFLAGS) $(AM_CPPFLAGS)
+-python_zbar_la_LDFLAGS = -shared -module -avoid-version -export-dynamic \
++python_zbar_la_LDFLAGS = -shared -module -avoid-version -no-undefined \
+     -export-symbols-regex initzbar
+ python_zbar_la_LIBADD = $(PYTHON_LIBS) zbar/libzbar.la $(AM_LIBADD)
+ 
+--- origsrc/zbar-0.10/qt/Makefile.am.inc	2009-10-23 13:16:44.000000000 -0500
++++ src/zbar-0.10/qt/Makefile.am.inc	2009-11-02 23:46:54.390983100 -0600
+@@ -1,6 +1,6 @@
+ lib_LTLIBRARIES += qt/libzbarqt.la
+ qt_libzbarqt_la_CPPFLAGS = -Iqt $(QT_CFLAGS) $(AM_CPPFLAGS)
+-qt_libzbarqt_la_LDFLAGS = -version-info $(ZQT_LIB_VERSION) $(AM_LDFLAGS)
++qt_libzbarqt_la_LDFLAGS = -no-undefined -version-info $(ZQT_LIB_VERSION) $(AM_LDFLAGS)
+ qt_libzbarqt_la_LIBADD = $(QT_LIBS) zbar/libzbar.la $(AM_LIBADD)
+ 
+ qt_libzbarqt_la_SOURCES = qt/QZBar.cpp qt/QZBarThread.h qt/QZBarThread.cpp
