@@ -1,5 +1,5 @@
 category: Graphics
-requires: libzbar0 libiconv libjpeg-devel libX11-devel
+requires: libzbar0
 external-source: zbar
 sdesc: "Barcode reader library (C development)"
 ldesc: "ZBar is an open source software suite for reading bar codes from 

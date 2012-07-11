@@ -47,3 +47,5 @@ src_install() {
 	perl_install
 	perl_postinst
 }
+
+KEEP_LA_FILES="none"

@@ -1,5 +1,5 @@
 category: Graphics
-requires: libzbarqt0 libQtCore4-devel libQtGui4-devel libstdc++6-devel libzbar-devel
+requires: libzbarqt0 libQtCore4-devel libQtGui4-devel libzbar-devel
 external-source: zbar
 sdesc: "Barcode reader library (Qt4 development)"
 ldesc: "ZBar is an open source software suite for reading bar codes from 
