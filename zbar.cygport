@@ -1,6 +1,14 @@
 inherit perl python qt4
 
-DESCRIPTION="Bar code reader libraries"
+NAME="zbar"
+VERSION=0.10
+RELEASE=6
+CATEGORY="Graphics"
+SUMMARY="Barcode image decoder"
+DESCRIPTION="ZBar is an open source software suite for reading bar codes from
+various sources, such as video streams, image files and raw intensity sensors.
+It supports many popular symbologies (types of bar codes) including EAN-13,
+UPC-A, UPC-E, EAN-8, Code 128, Code 39, Interleaved 2 of 5 and QR Code."
 HOMEPAGE="http://zbar.sourceforge.net/"
 SRC_URI="mirror://sourceforge/zbar/${P}.tar.bz2"
 
@@ -13,17 +21,30 @@ PATCH_URI="
 PKG_NAMES="zbar libzbar0 libzbar-devel libzbargtk0 libzbargtk-devel libzbarqt0
            libzbarqt-devel perl-Barcode-ZBar python-zbar python-zbarpygtk"
 zbar_CONTENTS="usr/bin/*.exe usr/share/doc/ usr/share/man/man1/"
+libzbar0_SUMMARY="${SUMMARY} library (C runtime)"
 libzbar0_CONTENTS="usr/bin/cygzbar-0.dll"
+libzbar_devel_SUMMARY="${SUMMARY} library (C development)"
 libzbar_devel_CONTENTS="--exclude=Q* --exclude=zbargtk.h usr/include/
                         usr/lib/libzbar.* usr/lib/pkgconfig/zbar.pc"
+libzbargtk0_SUMMARY="${SUMMARY} library (GTK+ runtime)"
 libzbargtk0_CONTENTS="usr/bin/cygzbargtk-0.dll"
+libzbargtk_devel_SUMMARY="${SUMMARY} library (GTK+ development)"
 libzbargtk_devel_CONTENTS="usr/include/zbar/zbargtk.h usr/lib/libzbargtk.*
                            usr/lib/pkgconfig/zbar-gtk.pc"
+libzbarqt0_SUMMARY="${SUMMARY} library (Qt4 runtime)"
 libzbarqt0_CONTENTS="usr/bin/cygzbarqt-0.dll"
+libzbarqt_devel_SUMMARY="${SUMMARY} library (Qt4 development)"
 libzbarqt_devel_CONTENTS="usr/include/zbar/Q* usr/lib/libzbarqt.*
                           usr/lib/pkgconfig/zbar-qt.pc"
+perl_Barcode_ZBar_CATEGORY="Perl"
+perl_Barcode_ZBar_SUMMARY="${SUMMARY} library (Perl bindings)"
 perl_Barcode_ZBar_CONTENTS="${PERL_VENDORARCH#/} usr/share/man/man3/"
+python_zbar_CATEGORY="Python"
+python_zbar_SUMMARY="${SUMMARY} library (Python bindings)"
 python_zbar_CONTENTS="${PYTHON_SITELIB#/}/zbar.*"
+python_zbarpygtk_CATEGORY="Python"
+python_zbarpygtk_SUMMARY="${SUMMARY} library (PyGTK bindings)"
+python_zbarpygtk_REQUIRES="python-gobject python-gtk2.0"
 python_zbarpygtk_CONTENTS="${PYTHON_SITELIB#/}/zbarpygtk.*"
 
 src_compile() {
