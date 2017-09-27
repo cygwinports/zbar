@@ -1,8 +1,8 @@
-inherit perl python qt4
+inherit perl python2 qt4
 
 NAME="zbar"
 VERSION=0.10
-RELEASE=8
+RELEASE=9
 CATEGORY="Graphics"
 SUMMARY="Barcode image decoder"
 DESCRIPTION="ZBar is an open source software suite for reading bar codes from
@@ -19,7 +19,7 @@ PATCH_URI="
 "
 
 PKG_NAMES="zbar libzbar0 libzbar-devel libzbargtk0 libzbargtk-devel libzbarqt0
-           libzbarqt-devel perl-Barcode-ZBar python-zbar python-zbarpygtk"
+           libzbarqt-devel perl-Barcode-ZBar python2-zbar python2-zbarpygtk"
 zbar_CONTENTS="usr/bin/*.exe usr/share/doc/ usr/share/man/man1/"
 libzbar0_SUMMARY="${SUMMARY} library (C runtime)"
 libzbar0_CONTENTS="usr/bin/cygzbar-0.dll"
@@ -39,13 +39,15 @@ libzbarqt_devel_CONTENTS="usr/include/zbar/Q* usr/lib/libzbarqt.*
 perl_Barcode_ZBar_CATEGORY="Perl"
 perl_Barcode_ZBar_SUMMARY="${SUMMARY} library (Perl bindings)"
 perl_Barcode_ZBar_CONTENTS="${PERL_VENDORARCH#/} usr/share/man/man3/"
-python_zbar_CATEGORY="Python"
-python_zbar_SUMMARY="${SUMMARY} library (Python bindings)"
-python_zbar_CONTENTS="${PYTHON_SITELIB#/}/zbar.*"
-python_zbarpygtk_CATEGORY="Python"
-python_zbarpygtk_SUMMARY="${SUMMARY} library (PyGTK bindings)"
-python_zbarpygtk_REQUIRES="python-gobject python-gtk2.0"
-python_zbarpygtk_CONTENTS="${PYTHON_SITELIB#/}/zbarpygtk.*"
+python2_zbar_CATEGORY="Python"
+python2_zbar_SUMMARY="${SUMMARY} library (Python bindings)"
+python2_zbar_OBSOLETES="python-zbar"
+python2_zbar_CONTENTS="${PYTHON2_SITELIB#/}/zbar.*"
+python2_zbarpygtk_CATEGORY="Python"
+python2_zbarpygtk_SUMMARY="${SUMMARY} library (PyGTK bindings)"
+python2_zbarpygtk_OBSOLETES="python-zbarpygtk"
+python2_zbarpygtk_REQUIRES="python-gobject python-gtk2.0"
+python2_zbarpygtk_CONTENTS="${PYTHON2_SITELIB#/}/zbarpygtk.*"
 
 src_compile() {
 	cd ${S}
@@ -66,7 +68,4 @@ src_install() {
 	cyginstall
 	cd ${B}/perl
 	perl_install
-	perl_postinst
 }
-
-KEEP_LA_FILES="none"
